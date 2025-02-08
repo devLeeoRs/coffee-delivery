@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Container, Label } from './style'
 
 interface FormProps {
@@ -14,10 +15,27 @@ export function InputFlex(
     type = 'text',
     name,
   }: FormProps) {
+  const [isFocused, setIsFocused] = useState(false)
+
+  function handleFocus() {
+    setIsFocused(true)
+  }
+
+  function handleBlur() {
+    setIsFocused(false)
+  }
+
   return (
-    <Container grid={name} active={false}>
+    <Container $grid={name} $active={isFocused}>
       <Label>
-        <input name={name} type={type} id="" placeholder={placeholder} />
+        <input
+          id={name}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          name={name}
+          type={type}
+          placeholder={placeholder}
+        />
         {optional && <span>Opcional</span>}
       </Label>
     </Container>

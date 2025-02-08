@@ -1,20 +1,20 @@
 import styled from 'styled-components'
 
 interface ContainerProps {
-  active: boolean
-  grid: string
+  $active: boolean
+  $grid: string
 }
 
 export const Container = styled.div <ContainerProps>`
   display: flex;
-  grid-area: ${props => props.grid};
+  grid-area: ${props => props.$grid};
   max-width: 100%;
   padding: 1.2rem;
   border-radius: .4rem;
   background: ${props => props.theme['base-input']};
 
   border: 1px solid;
-  border-color: ${props => props.active
+  border-color: ${props => props.$active
   ? props.theme['yellow-dark']
   : props.theme['base-button']};
 

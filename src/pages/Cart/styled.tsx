@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 interface payButtonProps {
-  active?: boolean
+  $active?: boolean
 }
 
 export const Container = styled.section`
@@ -82,11 +82,11 @@ export const PayButton = styled.button<payButtonProps>`
   gap: 1.2rem;
   min-width: 17.8rem;
   border-radius: .6rem;
-  background: ${props => props.active
+  background: ${props => props.$active
     ? props.theme['purple-light']
     : props.theme['base-button']};
   border: 1px solid ;
-  border-color: ${props => props.active
+  border-color: ${props => props.$active
     ? props.theme.purple
     : 'transparent'};
   font-size: 1.2rem;

@@ -25,6 +25,11 @@ import { CartContext } from '../../context/CartContextProvider'
 export function Cart() {
   const { cart } = useContext(CartContext)
   const [total, setTotal] = useState(0)
+  const [paymentMethod, setPaymentMethod] = useState('')
+
+  function handleSelectPayment(method:string) {
+    setPaymentMethod(method)
+  }
 
   useEffect(() => {
     const newTotal = cart
@@ -71,15 +76,24 @@ export function Cart() {
             </span>
           </div>
           <div className="paymentOptions">
-            <PayButton active>
+            <PayButton
+              $active={paymentMethod === 'credit'}
+              onClick={() => handleSelectPayment('credit')}
+            >
               <CreditCard size={16} />
               Cartão de crédito
             </PayButton>
-            <PayButton>
+            <PayButton
+              $active={paymentMethod === 'debit'}
+              onClick={() => handleSelectPayment('debit')}
+            >
               <Bank size={16} />
               cartão de débito
             </PayButton>
-            <PayButton>
+            <PayButton
+              $active={paymentMethod === 'money'}
+              onClick={() => handleSelectPayment('money')}
+            >
               <Money size={16} />
               dinheiro
             </PayButton>
