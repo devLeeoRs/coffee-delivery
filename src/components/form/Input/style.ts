@@ -2,12 +2,27 @@ import styled from 'styled-components'
 
 interface ContainerProps {
   $active: boolean
+}
+
+interface BoxProps {
   $grid: string
 }
 
+export const Box = styled.div<BoxProps>`
+  display: flex;
+  flex-direction: column;
+  grid-area: ${props => props.$grid};
+
+  span {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    color: ${({theme})=> theme['yellow-dark']};
+  }
+`
+
 export const Container = styled.div <ContainerProps>`
   display: flex;
-  grid-area: ${props => props.$grid};
+
   max-width: 100%;
   padding: 1.2rem;
   border-radius: .4rem;

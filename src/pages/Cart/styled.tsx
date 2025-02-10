@@ -4,10 +4,13 @@ interface payButtonProps {
   $active?: boolean
 }
 
-export const Container = styled.section`
-  margin-top: 4rem;
-  gap: 3.2rem;
-  display: flex;
+export const Container = styled.main`
+  form {
+    margin-top: 4rem;
+    gap: 3.2rem;
+    display: flex;
+
+  }
 `
 
 export const Checkout = styled.div`
@@ -42,6 +45,22 @@ export const Checkout = styled.div`
     }
   }
 
+`
+
+export const FormContainer = styled.div`
+
+    margin-top: 3.2rem;
+    gap: 1.2rem;
+    display: grid;
+    grid-template-columns: 20rem 27.6rem 6rem   ;
+    grid-template-areas: 
+    "cep  vazio vazio" 
+    "rua rua rua"
+    "number complemento complemento"
+    "bairro cidade uf "
+    ;
+
+  
 `
 export const Payment = styled.div`
   background: ${(props) => props.theme['base-card']};
@@ -99,19 +118,6 @@ export const PayButton = styled.button<payButtonProps>`
   }
 `
 
-export const Form = styled.form`
-margin-top: 3.2rem;
-display: grid;
-grid-template-columns: 20rem 27.6rem 6rem   ;
-grid-template-areas: 
-"cep  vazio vazio" 
-"rua rua rua"
-"number complemento complemento"
-"bairro cidade uf "
-;
-gap: 1.2rem;
-
-`
 
 export const CartList = styled.div`
   max-width: 44.8rem;

@@ -1,43 +1,45 @@
-import { useState } from 'react'
-import { Container, Label } from './style'
+import { useState, forwardRef, type InputHTMLAttributes } from 'react';
+import { Box, Container, Label } from './style';
+import type { FieldError } from 'react-hook-form';
 
-interface FormProps {
-  optional?: boolean
-  placeholder?: string
-  type?: string
-  name: string
+interface FormProps extends InputHTMLAttributes<HTMLInputElement> {
+  optional?: boolean;
+  grid: string;
+  error?: FieldError
 }
 
-export function InputFlex(
-  {
-    optional,
-    placeholder,
-    type = 'text',
-    name,
-  }: FormProps) {
-  const [isFocused, setIsFocused] = useState(false)
+export const InputFlex = forwardRef<HTMLInputElement, FormProps>(
+  ({ error,optional, grid,onFocus,onBlur, ...rest }, ref) => {
+    const [isFocused, setIsFocused] = useState(false);
 
-  function handleFocus() {
-    setIsFocused(true)
+    function handleFocus(event: React.FocusEvent<HTMLInputElement>) {
+      setIsFocused(true);
+      onFocus?.(event)
+    }
+
+    function handleBlur(event: React.FocusEvent<HTMLInputElement>) {
+      setIsFocused(false);
+      onBlur?.(event)
+    }
+
+    return (
+      <Box $grid={grid}>
+        <Container  $active={isFocused}>
+          <Label>
+            <input
+              ref={ref} 
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              {...rest}
+            />
+            {optional && <span>Opcional</span>}
+          </Label>
+        </Container>
+        {error?.message ? (
+        <span role="alert">{error.message}</span>
+      ) : null}
+      </Box>
+    );
   }
+);
 
-  function handleBlur() {
-    setIsFocused(false)
-  }
-
-  return (
-    <Container $grid={name} $active={isFocused}>
-      <Label>
-        <input
-          id={name}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          name={name}
-          type={type}
-          placeholder={placeholder}
-        />
-        {optional && <span>Opcional</span>}
-      </Label>
-    </Container>
-  )
-}
