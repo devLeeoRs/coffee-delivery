@@ -24,8 +24,9 @@ import { CartContext } from '../../context/CartContextProvider'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
+import { NavLink, useNavigate } from 'react-router-dom'
 
-interface FormInput {
+export interface FormInput {
   city : string
   complement: string
   district: string
@@ -33,6 +34,7 @@ interface FormInput {
   street: string
   uf: string
   zipCode: number
+  paymentMethod: string
 }
 
 const newOrderFormValidationSchema = zod.object({
@@ -42,12 +44,12 @@ const newOrderFormValidationSchema = zod.object({
   number: zod.number({ invalid_type_error: "Informe um numero" }),
   street: zod.string().min(1, "Informe o nome da rua "),
   uf: zod.string().min(1, "Informe o UF"),
-  zipCode: zod.number({ invalid_type_error: "Informe um CEP válido" })
-
+  zipCode: zod.number({ invalid_type_error: "Informe um CEP válido" }),
+  paymentMethod : zod.string()
 })
 
 export function Cart() {
-  const { cart } = useContext(CartContext)
+  const { cart,newOrder } = useContext(CartContext)
   const [total, setTotal] = useState(0)
   const [paymentMethod, setPaymentMethod] = useState('')
 
@@ -67,11 +69,15 @@ export function Cart() {
 
 
 
-  function handleCreateNewOrder(data: any) {
-    console.log(data);
+  function handleCreateNewOrder(data: FormInput) {
+    if(cart.length === 0 ) {
+      alert("Adicione itens ao carrinho")
+    } else {
+      newOrder(data)
+    }
+    return 
   }
 
-  console.log(errors.city)
 
   return (
     <Container>
@@ -152,17 +158,25 @@ export function Cart() {
               </span>
             </div>
             <div className="paymentOptions">
-              <PayButton
-                $active={paymentMethod === 'credit'}
+              <PayButton $active={paymentMethod === 'credit'}>
+                <input 
+                type="radio" 
                 onClick={() => handleSelectPayment('credit')}
-              >
-                <CreditCard size={16} />
-                Cartão de crédito
+                value="Cartao Credito"
+                {...register('paymentMethod')}
+                />
+                  <CreditCard size={16} />
+                  Cartão de crédito
+          
               </PayButton>
               <PayButton
                 $active={paymentMethod === 'debit'}
                 onClick={() => handleSelectPayment('debit')}
               >
+                <input type="radio" 
+                onClick={() => handleSelectPayment('debit')}
+                value="Cartao de Debito"
+                {...register('paymentMethod')}/>
                 <Bank size={16} />
                 cartão de débito
               </PayButton>
@@ -170,6 +184,12 @@ export function Cart() {
                 $active={paymentMethod === 'money'}
                 onClick={() => handleSelectPayment('money')}
               >
+                <input 
+                  type="radio" 
+                  onClick={() => handleSelectPayment('credit')}
+                  value="Dinheiro"
+                  {...register('paymentMethod')}
+                />
                 <Money size={16} />
                 dinheiro
               </PayButton>

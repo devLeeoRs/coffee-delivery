@@ -1,8 +1,18 @@
 import { CurrencyDollarSimple, MapPin, Timer } from 'phosphor-react'
 import { OrderContainer, SuccessContainer } from './styles'
 import successImg from '../../assets/Illustration.svg'
+import { useContext } from 'react'
+import { CartContext } from '../../context/CartContextProvider'
+import { useParams } from 'react-router-dom'
 
 export function Success() {
+
+  const {id} = useParams()
+  const {order} = useContext(CartContext)
+  const currentOrder = order.find(order => order.id === id)
+  
+
+  
   return (
     <SuccessContainer>
       <h1>Uhu! Pedido confirmado</h1>
@@ -15,8 +25,8 @@ export function Success() {
               <MapPin weight="fill" size={16} />
             </div>
             <span>
-              <p>Entrega em <b>Rua João Daniel Martinelli, 102</b></p>
-              <p>Farrapos - Porto Alegre, RS</p>
+              <p>Entrega em <b>{currentOrder?.street.toUpperCase()},{currentOrder?.number}</b></p>
+              <p>{currentOrder?.district.toUpperCase()} - {currentOrder?.city.toUpperCase()}, {currentOrder?.uf.toUpperCase()}</p>
             </span>
           </div>
           <div className="timeDelivery">
@@ -34,7 +44,7 @@ export function Success() {
             </div>
             <span>
               <p>Pagamento na Entrega</p>
-              <strong>Cartão de Crédito</strong>
+              <strong> {currentOrder?.paymentMethod} </strong>
             </span>
           </div>
         </div>

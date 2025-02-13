@@ -95,7 +95,7 @@ export const Payment = styled.div`
   
 `
 
-export const PayButton = styled.button<payButtonProps>`
+export const PayButton = styled.label<payButtonProps>`
   display: flex;
   align-items: center;
   gap: 1.2rem;
@@ -115,6 +115,10 @@ export const PayButton = styled.button<payButtonProps>`
 
   &:hover {
     background: ${props => props.theme['base-hover']}
+  }
+
+  input {
+    display: none;
   }
 `
 
