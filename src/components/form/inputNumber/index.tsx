@@ -15,11 +15,11 @@ export function InputNumber(
   }:InputNumberProps) {
   return (
     <Container>
-      <button onClick={decrementQuantity} className="minusButton">
+      <button type='button' onClick={decrementQuantity} className="minusButton">
         <Minus size={14} weight="bold" />
       </button>
       <span>{quantity}</span>
-      <button onClick={incrementQuantity} className="plusButton">
+      <button type='button' onClick={incrementQuantity} className="plusButton">
         <Plus size={14} weight="bold" />
       </button>
     </Container>

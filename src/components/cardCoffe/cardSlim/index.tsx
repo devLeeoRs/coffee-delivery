@@ -41,7 +41,7 @@ export function CardSlim({ image, title, price, quantity, id } : cardProps) {
             incrementQuantity={handleIncrementQuantityItem}
             quantity={quantity}
           />
-          <ButtonRemove onClick={handleRemoveItem}>
+          <ButtonRemove type='button' onClick={handleRemoveItem}>
             <Trash size={16} weight="light" />
             Remover
           </ButtonRemove>
